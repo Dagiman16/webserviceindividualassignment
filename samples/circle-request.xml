@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:tns="http://example.com/shapetool">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <tns:CircleAreaRequest>
+            <tns:radius>5.0</tns:radius>
+        </tns:CircleAreaRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

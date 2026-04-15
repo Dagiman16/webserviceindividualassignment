@@ -4,11 +4,18 @@
            xmlns:tns="http://example.com/shapetool"
            elementFormDefault="qualified">
 
+    <!-- Reusable restricted type: only positive doubles allowed -->
+    <xs:simpleType name="positiveDouble">
+        <xs:restriction base="xs:double">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- Circle -->
     <xs:element name="CircleAreaRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="radius" type="xs:double"/>
+                <xs:element name="radius" type="tns:positiveDouble"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -25,7 +32,7 @@
     <xs:element name="SquareAreaRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="side" type="xs:double"/>
+                <xs:element name="side" type="tns:positiveDouble"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -42,8 +49,8 @@
     <xs:element name="RectangleAreaRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="length" type="xs:double"/>
-                <xs:element name="width" type="xs:double"/>
+                <xs:element name="length" type="tns:positiveDouble"/>
+                <xs:element name="width" type="tns:positiveDouble"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -60,8 +67,8 @@
     <xs:element name="ParallelogramAreaRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="base" type="xs:double"/>
-                <xs:element name="height" type="xs:double"/>
+                <xs:element name="base" type="tns:positiveDouble"/>
+                <xs:element name="height" type="tns:positiveDouble"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -78,8 +85,8 @@
     <xs:element name="TriangleAreaRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="base" type="xs:double"/>
-                <xs:element name="height" type="xs:double"/>
+                <xs:element name="base" type="tns:positiveDouble"/>
+                <xs:element name="height" type="tns:positiveDouble"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

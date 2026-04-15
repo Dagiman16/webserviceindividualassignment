@@ -1,0 +1,10 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:tns="http://example.com/shapetool">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <tns:TriangleAreaRequest>
+            <tns:base>10.0</tns:base>
+            <tns:height>4.0</tns:height>
+        </tns:TriangleAreaRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

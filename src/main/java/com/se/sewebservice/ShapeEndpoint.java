@@ -2,22 +2,30 @@ package com.se.sewebservice;
 
 import com.se.sewebservice.calculator.*;
 import org.springframework.ws.server.endpoint.annotation.*;
+import org.springframework.ws.soap.server.endpoint.annotation.SoapFault;
+import org.springframework.ws.soap.server.endpoint.annotation.SoapFaults;
+import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
+import org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver;
+import org.springframework.ws.soap.SoapFaultException;
 
 @Endpoint
 public class ShapeEndpoint {
 
     private static final String NAMESPACE_URI = "http://example.com/shapetool";
 
+    private void validatePositive(double value, String fieldName) {
+        if (value <= 0) {
+            throw new IllegalArgumentException(fieldName + " must be greater than zero");
+        }
+    }
+
     // Circle
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CircleAreaRequest")
     @ResponsePayload
     public CircleAreaResponse circle(@RequestPayload CircleAreaRequest request) {
+        validatePositive(request.getRadius(), "radius");
         CircleAreaResponse response = new CircleAreaResponse();
-
-        double r = request.getRadius();
-        if (r < 0) throw new RuntimeException("Radius cannot be negative");
-
-        response.setArea(Math.PI * r * r);
+        response.setArea(Math.PI * request.getRadius() * request.getRadius());
         return response;
     }
 
@@ -25,12 +33,9 @@ public class ShapeEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SquareAreaRequest")
     @ResponsePayload
     public SquareAreaResponse square(@RequestPayload SquareAreaRequest request) {
+        validatePositive(request.getSide(), "side");
         SquareAreaResponse response = new SquareAreaResponse();
-
-        double s = request.getSide();
-        if (s < 0) throw new RuntimeException("Side cannot be negative");
-
-        response.setArea(s * s);
+        response.setArea(request.getSide() * request.getSide());
         return response;
     }
 
@@ -38,14 +43,10 @@ public class ShapeEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RectangleAreaRequest")
     @ResponsePayload
     public RectangleAreaResponse rectangle(@RequestPayload RectangleAreaRequest request) {
+        validatePositive(request.getLength(), "length");
+        validatePositive(request.getWidth(), "width");
         RectangleAreaResponse response = new RectangleAreaResponse();
-
-        double l = request.getLength();
-        double w = request.getWidth();
-
-        if (l < 0 || w < 0) throw new RuntimeException("Invalid input");
-
-        response.setArea(l * w);
+        response.setArea(request.getLength() * request.getWidth());
         return response;
     }
 
@@ -53,14 +54,10 @@ public class ShapeEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ParallelogramAreaRequest")
     @ResponsePayload
     public ParallelogramAreaResponse parallelogram(@RequestPayload ParallelogramAreaRequest request) {
+        validatePositive(request.getBase(), "base");
+        validatePositive(request.getHeight(), "height");
         ParallelogramAreaResponse response = new ParallelogramAreaResponse();
-
-        double b = request.getBase();
-        double h = request.getHeight();
-
-        if (b < 0 || h < 0) throw new RuntimeException("Invalid input");
-
-        response.setArea(b * h);
+        response.setArea(request.getBase() * request.getHeight());
         return response;
     }
 
@@ -68,14 +65,10 @@ public class ShapeEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "TriangleAreaRequest")
     @ResponsePayload
     public TriangleAreaResponse triangle(@RequestPayload TriangleAreaRequest request) {
+        validatePositive(request.getBase(), "base");
+        validatePositive(request.getHeight(), "height");
         TriangleAreaResponse response = new TriangleAreaResponse();
-
-        double b = request.getBase();
-        double h = request.getHeight();
-
-        if (b < 0 || h < 0) throw new RuntimeException("Invalid input");
-
-        response.setArea(0.5 * b * h);
+        response.setArea(0.5 * request.getBase() * request.getHeight());
         return response;
     }
 }
